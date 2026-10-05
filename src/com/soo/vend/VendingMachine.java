@@ -27,13 +27,11 @@ package com.soo.vend;
 public class VendingMachine {
 
     private int balance = 0; // 잔액
-    private int stock = 3; // 재고
-    private final int PRICE = 2000; //가격
 
-    private final String[] NAMES= {"콜라", "사이다", "하늘보리", "생수"}; // 음료 이름
-    private final int[] PRICES = {2000,1800,1400,1100}; // 가격
-    private int[] stocks = {2,3,2,1};
-
+    private final String[] NAMES = {"콜라", "사이다", "하늘보리", "생수"}; // 음료 이름
+    private final int[] PRICES = {2000, 1800, 1400, 1100};            // 가격
+    private int[] stocks = {2, 3, 2, 1};                               // 재고
+    // 같은 번호(인덱스)끼리 한 음료다. 예) 0번 = 콜라, 2000원, 2개
 
     public void money(int amount) {
 
@@ -46,17 +44,41 @@ public class VendingMachine {
 
     }
 
-    public void drink() {
+    /* 음료 메뉴를 보여줘라 */
+    public void showMenu() {
 
-        if (stock == 0) {
-            System.out.println("품절입니다.😭");
-        } else if (balance < PRICE) {
-            System.out.println("금액이 부족합니다.😢 현재 잔액은 " +balance+ "원 이고 " +
-                    "가격은 " +PRICE+ "원 입니다. 총 " +(PRICE-balance)+ "원이 부족합니다.");
+        System.out.println("----------- 음료 메뉴 -----------");
+
+        // 배열 길이만큼 반복하면서 한 줄씩 출력 (i는 0, 1, 2, 3)
+        for (int i = 0; i < NAMES.length; i++) {
+            if (stocks[i] == 0) {
+                System.out.println((i + 1) + ". " + NAMES[i] + " " + PRICES[i] + "원 (품절)");
+            } else {
+                System.out.println((i + 1) + ". " + NAMES[i] + " " + PRICES[i] + "원");
+            }
+        }
+
+        System.out.println("현재 잔액 : " + balance + "원");
+        System.out.println("--------------------------------");
+    }
+
+    /* 선택한 음료를 내보내라 */
+    public void drink(int num) {
+
+        int i = num - 1; // 손님은 1번부터 고르지만 배열은 0번부터 시작하니까 1을 뺀다
+
+        // 배열을 건드리기 전에 없는 번호부터 걸러낸다 (안 그러면 프로그램이 에러로 멈춤)
+        if (i < 0 || i >= NAMES.length) {
+            System.out.println("잘못된 선택입니다. 1~" + NAMES.length + "번 중에서 골라주세요.");
+        } else if (stocks[i] == 0) {
+            System.out.println(NAMES[i] + "은(는) 품절입니다.😭");
+        } else if (balance < PRICES[i]) {
+            System.out.println("금액이 부족합니다.😢 현재 잔액은 " + balance + "원 이고 " +
+                    NAMES[i] + " 가격은 " + PRICES[i] + "원 입니다. 총 " + (PRICES[i] - balance) + "원이 부족합니다.");
         } else {
-            balance -= PRICE;
-            stock -= 1;
-            System.out.println("음료가 나왔습니다! 남은 잔액은 " +balance+"원 입니다.");
+            balance -= PRICES[i];
+            stocks[i]--;
+            System.out.println(NAMES[i] + "이(가) 나왔습니다! 남은 잔액은 " + balance + "원 입니다.");
         }
 
     }

@@ -28,13 +28,16 @@ public class Customer {
 
     private VendingMachine vend = new VendingMachine();
 
-
     public void money(int amount) {
         vend.money(amount);
     }
 
-    public void drink() {
-        vend.drink();
+    public void showMenu() {
+        vend.showMenu();
+    }
+
+    public void drink(int num) {   // Application이 보낸 번호를 받아서
+        vend.drink(num);           // 그대로 자판기에게 넘긴다
     }
 
     public void returnChange() {

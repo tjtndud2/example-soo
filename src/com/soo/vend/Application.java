@@ -37,7 +37,7 @@ public class Application {
         while (true) {
             System.out.println("==========자판기 프로그램==========");
             System.out.println("1. 돈 넣기");
-            System.out.println("2. 음료 주기");
+            System.out.println("2. 음료 선택");
             System.out.println("3. 거스름돈 반환");
             System.out.println("9. 프로그램 종료");
             System.out.println("================================");
@@ -52,9 +52,10 @@ public class Application {
                     cust.money(amount);
                     break;
                 case 2 :
-                    System.out.println("음료 이름을 적어주세요!");
-                    String num = sc.nextLine();
-                    cust.drink();
+                    cust.showMenu();                                  // 메뉴를 먼저 보여주고
+                    System.out.print("음료 번호를 입력해주세요🥤 : ");    // 안내하고
+                    int num = sc.nextInt();                           // 번호를 받고
+                    cust.drink(num);                                  // 넘긴다
                     break;
                 case 3 :
                     cust.returnChange();
